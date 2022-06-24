@@ -107,6 +107,7 @@ class usersController extends Controller
             $data = User::find($id);
             $data->username = $request->input('username');
             $data->name = $request->input('name');
+            $data->avatar = $request->input('avatar');
             $data->email = $request->input('email');
             $data->phone = $request->input('phone');
             $data->password = bcrypt($request->input('password'));

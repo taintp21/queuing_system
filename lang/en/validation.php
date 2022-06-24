@@ -149,9 +149,16 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'username' => [
+            'required' => 'Yêu cầu điền tên đăng nhập!',
+            'string' => 'Tên đăng nhập phải là một chuỗi ký tự!',
         ],
+        'password' => [
+            'required' => 'Yêu cầu điền mật khẩu!',
+        ],
+        'email' => [
+            'required' => 'Yêu cầu điền email!',
+        ]
     ],
 
     /*

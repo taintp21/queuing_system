@@ -11,6 +11,6 @@ class Devices extends Model
     protected $table = 'devices';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'device_code', 'device_name', 'ip_address', 'status', 'connection', 'created_at', 'updated_at'
+        'device_code', 'device_name', 'ip_address', 'status', 'connection'
     ];
 }

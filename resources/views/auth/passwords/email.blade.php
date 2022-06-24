@@ -1,47 +1,49 @@
 @extends('layouts.app')
+@section('web-title', 'Quên mật khẩu')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+    <div class="row align-items-center">
+        <div class="col-md-6 h-100vh pt-5">
+            <div class="text-center my-5">
+                <img src="{{ asset('images/logo.png') }}" width="170px" height="136px" alt="logo">
+            </div>
+            <form method="POST" action="{{ route('password.email') }}" class="m-auto">
+                @csrf
+                <div class="mb-4 text-center col-md-6 m-auto">
+                    <h4 class="fw-bold">Đặt lại mật khẩu</h4>
+                    <label for="email" class="fw-normal">Vui lòng nhập email để đặt lại mật khẩu của bạn *</label>
+                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
+                    @error('email')
+                        <span class="invalid-feedback text-left" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="mb-3 inline-block text-center">
+                    <button type="button" class="btn btn-outline-theme" onclick="window.location='{{ route('login') }}'">Huỷ</button>
+                    <button type="submit" class="btn btn-theme">Tiếp tục</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 bg-white h-100vh pt-5">
+            <div class="image-background text-center position-relative">
+                <img src="{{ asset('images/image1.png') }}" alt="background-image">
+                <div class="centered-right color-1">
+                    <h4>Hệ thống</h4>
+                    <h3 class="fw-bolder">QUẢN LÝ XẾP HÀNG</h3>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
+@section('custom_scripts')
+    @if (session('status'))
+        <script>
+            Swal.fire(
+                'Hoàn tất!',
+                'Đã gửi liên kết đặt lại mật khẩu đến email của bạn.',
+                'success'
+            );
+        </script>
+    @endif
+@stop

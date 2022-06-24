@@ -7,10 +7,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\rolesController;
 use App\Http\Controllers\usersController;
 use App\Http\Controllers\devicesController;
+use App\Http\Controllers\giveNumController;
+use App\Http\Controllers\profileController;
 use App\Http\Controllers\reportsController;
 use App\Http\Controllers\servicesController;
 use App\Http\Controllers\activityLogsController;
-use App\Http\Controllers\giveNumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ use App\Http\Controllers\giveNumController;
 |
 */
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
@@ -64,3 +65,6 @@ Route::name('system.')->middleware('auth')->group(function(){
 
     Route::get('cai-dat/nhat-ky-hoat-dong', [activityLogsController::class, 'index'])->name('user_logs.index');
 });
+
+Route::get('profile/{id}', [profileController::class, 'index'])->name('profile.index');
+Route::post('profile/{id}/dropzone', [profileController::class, 'dropzone'])->name('dropzone');

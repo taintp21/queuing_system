@@ -11,7 +11,7 @@ class Roles extends Model
     protected $table = 'roles';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'role_name', 'description', 'role_delegation', 'created_at', 'updated_at'
+        'role_name', 'description', 'role_delegation'
     ];
 
     public function setCategoryAttribute($value)

@@ -7,8 +7,12 @@ body {
     font-family: nunito_regular!important;
 }
 
+.h-100vh{
+    height: 100vh;
+}
+
 .background {
-    background-color: #f6f6f6!important;
+    background-color: #f6f6f6;
 }
 
 .background-1 {
@@ -24,7 +28,26 @@ body {
 }
 
 .color-1 {
-    color: #FF7506;
+    color: #FF7506!important;
+}
+
+.color-2{
+    color: #E73F3F!important;
+}
+
+.link:hover{
+    text-decoration: underline!important;
+}
+
+.image-background img{
+    width: 70%;
+}
+
+.centered-right{
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    right: 15%;
 }
 
 form {
@@ -34,6 +57,11 @@ form {
 input:focus, select:focus{
     border-color: #FFAC6A!important;
     box-shadow: none!important;
+}
+input:disabled{
+    font-weight: 400;
+    color: #535261;
+    opacity: 0.5!important;
 }
 
 textarea{
@@ -50,7 +78,7 @@ textarea:focus{
 }
 
 .btn {
-    padding: .8rem 2rem!important;
+    padding: .5rem 2rem!important;
     min-width: 150px;
 }
 
@@ -125,9 +153,6 @@ select:focus>option:checked {
     background-color: white;
     padding: 1.5rem 1.5rem 3rem 1.5rem!important;
     margin-bottom: 1rem!important;
-    flex: 0 0 auto;
-    width: 91.66666667%;
-    min-height: 50vh;
 }
 
 div button {
@@ -256,4 +281,10 @@ table tbody {
     max-width: 150px;
     max-height: 150px;
     padding: 1.5rem;
+}
+.profile>.avatar>img{
+    width: 50px;
+    height: 50px;
+    object-fit: fill;
+    text-align: center;
 }

@@ -25,8 +25,8 @@ class devicesController extends Controller
         $devices->device_name = $request->input('device_name');
         $devices->device_type = $request->input('device_type');
         $devices->ip_address = $request->input('ip_address');
-        $devices->status = 1;
-        $devices->connection = 1;
+        $devices->status = 2;
+        $devices->connection = 2;
         $devices->username = $request->input('username');
         $devices->password = $request->input('password');
         $devices->description = $request->input('description');

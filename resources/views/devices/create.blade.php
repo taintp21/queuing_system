@@ -8,7 +8,7 @@
             <h4 class="mb-4 fw-bold color-1">Thông tin thiết bị</h4>
             <div class="col-md-6 mb-3">
                 <label for="device_code">Mã thiết bị</label>
-                <input type="text" class="form-control" name="device_code" id="device_code" placeholder="Nhập mã thiết bị" value="{{old('device_code')}}">
+                <input type="text" class="form-control" name="device_code" id="device_code" placeholder="Nhập mã thiết bị" autofocus value="{{old('device_code')}}">
             </div>
             <div class="col-md-6 mb-3">
                 <label for="device_type">Loại thiết bị</label>
