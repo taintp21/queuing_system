@@ -27,28 +27,12 @@ return new class extends Migration
             $table->tinyInteger("status")->default(1)->comment("0 = Active, 1 = Inactive");
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign("roles_id")->references("id")->on("roles")->onDelete("cascade")->onUpdate("cascade");
         });
     }
-    protected function dropColumn($table, $column) {
-        try {
-            Schema::disableForeignKeyConstraints();
-            Schema::table($table, function (Blueprint $tbl) use ($column) {
-                $tbl->dropColumn($column);
-            });
-        } catch (Illuminate\Database\QueryException $e)
-        {
-            Schema::table($table, function (Blueprint $tbl) use ($column) {
-                $tbl->dropConstrainedForeignId($column);
-            });
-        } finally {
-            Schema::enableForeignKeyConstraints();
-        }
-    }
+
 
     public function down()
     {
-        $this->dropColumn('users', 'roles_id');
         Schema::dropIfExists("users");
     }
 };

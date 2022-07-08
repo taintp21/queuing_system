@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string("phone", 50);
             $table->string("email", 100);
             $table->unsignedBigInteger('services_id', false);
-            $table->string('expired_date', 100);
             $table->timestamp("expired_date")->nullable();
             $table->tinyInteger('status')->comment("0 = Đang chờ, 1 = Đã sử dụng, 2 = Bỏ qua");
             $table->string('supply',50);
