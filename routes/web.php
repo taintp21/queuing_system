@@ -24,7 +24,7 @@ use App\Http\Controllers\activityLogsController;
 |
 */
 
-Auth::routes();
+Auth::routes(['register' => false]); /* Bỏ ['register' => false] để đăng ký */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
