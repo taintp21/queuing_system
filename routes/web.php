@@ -24,7 +24,7 @@ use App\Http\Controllers\activityLogsController;
 |
 */
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
