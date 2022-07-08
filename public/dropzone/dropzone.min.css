@@ -254,8 +254,8 @@
     display: none
 }
 
-.dropzone.dz-drag-hover {
-    border-style: solid
+.dropzone.dz-drag-hover{
+    background-color: #ccc!important;
 }
 
 .dropzone.dz-drag-hover .dz-message {

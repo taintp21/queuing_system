@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string("device_code");
             $table->string("device_name");
+            $table->string('device_type');
             $table->string("ip_address");
+            $table->string("username");
+            $table->string("password");
             $table->tinyInteger("status")->comment('0 = active, 1 = inactive');
             $table->tinyInteger("connection")->comment('0 = active, 1 = inactive');
             $table->text('description');

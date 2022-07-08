@@ -14,17 +14,7 @@ class Roles extends Model
         'role_name', 'description', 'role_delegation'
     ];
 
-    public function setCategoryAttribute($value)
-    {
-        $this->attributes['role_delegation'] = json_encode($value);
-    }
-
-    public function getCategoryAttribute($value)
-    {
-        return $this->attributes['role_delegation'] = json_decode($value);
-    }
-
     public function users(){
-        return $this->hasMany(User::class, 'id');
+        return $this->hasMany(User::class,'roles_id','id');
     }
 }

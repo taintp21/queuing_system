@@ -17,13 +17,18 @@ class profileController extends Controller
      */
     public function index($id)
     {
-        $id = Auth::check();
+        //Authorized
+        abort_if(Auth::user()->id != $id, 401);
+
         $profile = User::findOrFail($id);
         return view('profile.index', compact('profile'));
     }
     public function dropzone(Request $request, $id)
     {
-        $user = User::find($id);
+        //Authorized
+        abort_if(Auth::user()->id != $id, 401);
+
+        $user = User::findOrFail($id);
         $validator = Validator::make($request->all(),[
             'file' => 'required|mimes:png,jpg,gif,bmp,jpeg'
         ]);
@@ -34,7 +39,7 @@ class profileController extends Controller
         }
         else {
             if($request->hasFile('file')){
-                if(auth()->user()->avatar) Storage::delete('public/images/avatar/'. auth()->user()->avatar);
+                if(auth()->user()->avatar) Storage::delete('public/images/avatar/'. Auth::user()->avatar);
                 $destination_path = 'public/images/avatar';
                 $file = $request->file('file');
                 $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -43,11 +48,6 @@ class profileController extends Controller
                 $file->storeAs($destination_path, $filename);
                 $user->avatar = $filename;
                 $user->update();
-
-                return response()->json([
-                    'status' => 200,
-                    'success' => 'Tải ảnh thành công!',
-                ]);
             }
         }
 

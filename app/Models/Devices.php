@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Devices extends Model
 {
@@ -11,6 +12,6 @@ class Devices extends Model
     protected $table = 'devices';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'device_code', 'device_name', 'ip_address', 'status', 'connection'
+        'device_code', 'device_name', 'device_type', 'ip_address', 'username', 'password', 'status', 'connection', 'description'
     ];
 }

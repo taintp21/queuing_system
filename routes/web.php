@@ -40,10 +40,17 @@ Route::name('devices.')->middleware('auth')->group(function(){
 Route::name('services.')->middleware('auth')->group(function(){
     Route::get('dich-vu', [servicesController::class, 'index'])->name('index');
     Route::get('dich-vu/them-dich-vu', [servicesController::class, 'create'])->name('create');
+    Route::post('dich-vu/them-dich-vu/luu', [servicesController::class, 'store'])->name('store');
+    Route::get('dich-vu/chi-tiet/{id}', [servicesController::class, 'show'])->name('show');
+    Route::get('dich-vu/cap-nhat-dich-vu/{id}', [servicesController::class, 'edit'])->name('edit');
+    Route::put('dich-vu/cap-nhat-dich-vu/luu/{id}', [servicesController::class, 'update'])->name('update');
 });
 
 Route::name('give_num.')->middleware('auth')->group(function(){
     Route::get('cap-so', [giveNumController::class, 'index'])->name('index');
+    Route::get('cap-so/cap-so-moi', [giveNumController::class, 'create'])->name('create');
+    Route::post('cap-so/cap-so-moi/luu', [giveNumController::class, 'store'])->name('store');
+    Route::get('cap-so/chi-tiet/{id}', [giveNumController::class, 'show'])->name('show');
 });
 
 Route::name('reports.')->middleware('auth')->group(function(){

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#addform").on('submit', function(e){
+    $(".addbtn").on('click', function(e){
         e.preventDefault();
         $("#name-error").html('');
         $("#username-error").html('');
@@ -8,8 +8,8 @@ $(document).ready(function(){
         $("#email-error").html('');
         $("#password_confirmation-error").html('');
         $.ajax({
-            url: $(this).attr("action"),
-            method: $(this).attr("method"),
+            url: $("#addform").attr('action'),
+            method: 'POST',
             data: $("#addform").serialize(),
             success: function(response){
                 if(response.status == 400){
@@ -19,19 +19,21 @@ $(document).ready(function(){
                     });
                 }
                 else{
-                    $(".content div span").html('');
-                    $(".content div span").addClass('d-none');
-                    $('#addform')[0].reset();
-                    Swal.fire(
-                        'Hoàn tất!',
-                        'Thêm thành công!',
-                        'success'
-                    );
+                    $.each(response.errors, function(key, val){
+                        $("#" + key).next().html('');
+                        $("#" + key).next().addClass('d-none');
+                    });
+                    $('#addform').trigger('reset');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hoàn tất',
+                        text: 'Thêm mới thành công!',
+                    });
                 }
             }
         });
     });
-    $("#editform").on('submit', function(e){
+    $(".editbtn").on('click', function(e){
         e.preventDefault();
         $("#name-error").html('');
         $("#username-error").html('');
@@ -40,7 +42,7 @@ $(document).ready(function(){
         $("#email-error").html('');
         $("#password_confirmation-error").html('');
         $.ajax({
-            url: $(this).attr("action"),
+            url: $("#editform").attr('action'),
             method: "PUT",
             data: $("#editform").serialize(),
             success: function(response){
@@ -49,14 +51,17 @@ $(document).ready(function(){
                         $("#" + key).next().html(val[0]);
                         $("#" + key).next().removeClass('d-none');
                     });
-                }else{
-                    $(".content div span").html('');
-                    $(".content div span").addClass('d-none');
-                    Swal.fire(
-                        'Hoàn tất!',
-                        'Cập nhật thành công!',
-                        'success'
-                    );
+                }
+                else{
+                    $.each(response.errors, function(key, val){
+                        $("#" + key).next().html('');
+                        $("#" + key).next().addClass('d-none');
+                    });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hoàn tất',
+                        text: 'Cập nhật thành công!',
+                    });
                 }
             }
         })
