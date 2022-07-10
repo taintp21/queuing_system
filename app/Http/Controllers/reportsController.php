@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Roles;
 use App\Models\GiveNum;
 use Illuminate\Http\Request;
@@ -11,9 +12,12 @@ class reportsController extends Controller
 {
     public function index()
     {
-        //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("bc", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $baocao = GiveNum::orderBy("id", "desc")->get();
         return view('reports.index', compact('baocao'));

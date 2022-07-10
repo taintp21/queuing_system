@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Roles;
+use App\Models\Devices;
 use App\Models\GiveNum;
 use App\Models\Services;
 use App\Models\ActivityLogs;
-use App\Models\Devices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +18,12 @@ class giveNumController extends Controller
     public function index()
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("cs", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $services = Services::select('id', 'service_name')->get();
         $give_num = GiveNum::with('services')->orderBy("id", "desc")->get();
@@ -28,8 +33,12 @@ class giveNumController extends Controller
     public function create()
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("cs_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $services = Services::select('id', 'service_name')->get();
         return view('give_num.create', compact('services'));
@@ -38,8 +47,12 @@ class giveNumController extends Controller
     public function store(Request $request)
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("cs_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $validator = Validator::make($request->all(), [
             'service' => ['required'],
@@ -167,6 +180,14 @@ class giveNumController extends Controller
 
     public function show($id)
     {
+        //Authorized
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
+
         $data = GiveNum::findOrFail($id);
         return view('give_num.detail', compact('data'));
     }

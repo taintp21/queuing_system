@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Roles;
 use App\Models\ActivityLogs;
 use Illuminate\Http\Request;
@@ -14,8 +15,12 @@ class rolesController extends Controller
     public function index()
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("vt", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $roles = Roles::orderBy('id', 'desc')->withCount('users')->get();
         return view('roles.index', compact('roles'));
@@ -24,8 +29,12 @@ class rolesController extends Controller
     public function create()
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("vt_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         return view('roles.create');
     }
@@ -33,8 +42,12 @@ class rolesController extends Controller
     public function store(Request $request)
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("vt_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $validator = Validator::make($request->all(), [
             'role_name' => ['required', 'string', 'max:191', 'unique:roles,role_name']
@@ -67,9 +80,12 @@ class rolesController extends Controller
 
     public function edit($id)
     {
-        //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("vt_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $data = Roles::findOrFail($id);
         return view('roles.edit', compact('data'));
@@ -78,9 +94,12 @@ class rolesController extends Controller
 
     public function update(Request $request, $id)
     {
-        //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("vt_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $roles = Roles::findOrFail($id);
         $validator = Validator::make($request->all(), [

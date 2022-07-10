@@ -15,8 +15,12 @@ class usersController extends Controller
 {
     public function index(){
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tk", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $data = User::orderBy('id','desc')->with('role')->get();
         $roles = Roles::all();
@@ -25,8 +29,12 @@ class usersController extends Controller
 
     public function create(){
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tk_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $roles = Roles::all();
         return view('users.create', compact('roles'));
@@ -34,8 +42,12 @@ class usersController extends Controller
 
     public function store(Request $request){
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tk_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $validator = Validator::make($request->all(), [
             'username' => ['required','string','max:191','unique:users,username'],
@@ -90,8 +102,12 @@ class usersController extends Controller
     }
     public function edit($id){
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tk_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $data = User::findOrFail($id);
         $roles = Roles::all();
@@ -100,8 +116,12 @@ class usersController extends Controller
 
     public function update(Request $request, $id){
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tk_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $user = User::findOrFail($id);
         $validator = Validator::make($request->all(), [

@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\UserLogs;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\rolesController;
@@ -24,7 +26,7 @@ use App\Http\Controllers\activityLogsController;
 |
 */
 
-Auth::routes(['register' => false]); /* Bỏ ['register' => false] để đăng ký */
+Auth::routes(); /* Bỏ ['register' => false] để đăng ký */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
@@ -75,3 +77,16 @@ Route::name('system.')->middleware('auth')->group(function(){
 
 Route::get('profile/{id}', [profileController::class, 'index'])->name('profile.index');
 Route::post('profile/{id}/dropzone', [profileController::class, 'dropzone'])->name('dropzone');
+
+
+Route::get('storage/{filename}', function ($filename)
+{
+    $path = storage_path('public/' . $filename);
+
+    if (!File::exists($path)) abort(404);
+    $file = File::get($path);
+    $type = File::mimeType($path);
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    return $response;
+});

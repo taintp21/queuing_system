@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
             $table->string('username',255);
-            $table->string('ip_adress', 255);
+            $table->string('ip_address', 255);
             $table->text('description');
             $table->timestamps();
         });

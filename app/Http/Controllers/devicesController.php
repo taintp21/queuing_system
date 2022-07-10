@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Roles;
 use App\Models\Devices;
 use App\Models\ActivityLogs;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,12 @@ class devicesController extends Controller
     public function index()
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tb", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $data = Devices::orderBy('id', 'desc')->get();
         return view('devices.index', compact('data'));
@@ -27,8 +32,12 @@ class devicesController extends Controller
     public function create()
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tb_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         return view('devices.create');
     }
@@ -36,8 +45,12 @@ class devicesController extends Controller
     public function store(Request $request)
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tb_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         Validator::extend('checkHashedPass', function($attribute, $value, $parameters){
             if(!Hash::check($value , Auth::user()->password)) return false;
@@ -98,8 +111,12 @@ class devicesController extends Controller
     public function show($id)
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tb_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $data = Devices::findOrFail($id);
         return view('devices.detail', compact('data'));
@@ -108,8 +125,12 @@ class devicesController extends Controller
     public function edit($id)
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tb_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         $data = Devices::findOrFail($id);
         return view('devices.edit', compact('data'));
@@ -118,8 +139,12 @@ class devicesController extends Controller
     public function update(Request $request, $id)
     {
         //Authorized
-        $role = Roles::where('id', Auth::user()->id)->first()->role_delegation;
-        abort_if(!in_array("tb_action", explode(",", $role)), 401);
+        $user_id = Auth::user()->id;
+        $role = Roles::where('id', $user_id)->first()->role_delegation;
+        $user_role = User::where('id', $user_id)->first()->roles_id;
+        if(!in_array("tb", explode(",", $role)) || $user_role == null){
+            abort(401);
+        }
 
         Validator::extend('checkHashedPass', function($attribute, $value, $parameters){
             if(!Hash::check($value , Auth::user()->password)) return false;
