@@ -1,0 +1,5 @@
+- Chạy composer install
+- Tạo database và đặt tên giống database trong file .env: DB_DATABASE
+- Chạy php artisan migrate
+- Chạy php artisan db:seed --class=RolesSeeder
+- Tạo tài khoản /register, đổi roles_id = 1 và active = 0 trong database bảng users
