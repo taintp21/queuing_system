@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string("phone", 50)->nullable();
             $table->string('password');
-            $table->unsignedBigInteger("roles_id", false);
+            $table->unsignedBigInteger("roles_id", false)->nullable();
             $table->tinyInteger("status")->default(1)->comment("0 = Active, 1 = Inactive");
             $table->rememberToken();
             $table->timestamps();
