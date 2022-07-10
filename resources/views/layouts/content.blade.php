@@ -16,10 +16,10 @@
                             </div>
                             <div class="dropdown">
                                 <div class="profile row" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="col-lg-3 avatar">
+                                    <div class="col-lg-4 avatar">
                                         <img src="{{ url('storage/images/avatar/' . Auth::user()->avatar) }}" class="rounded-circle" alt="{{ Auth::user()->name }}">
                                     </div>
-                                    <div class="col-lg-9 info">
+                                    <div class="col-lg-8 info">
                                         <small class="text-muted">Xin chào</small>
                                         <p class="fw-bold">{{ Auth::user()->name }}</p>
                                     </div>
